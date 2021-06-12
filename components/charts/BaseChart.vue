@@ -40,12 +40,15 @@ export default {
   }),
   watch: {
     labels() {
+      this.chart.data.labels = this.labels
       this.chart.update()
     },
     datasets() {
+      this.chart.data.datasets = this.datasets
       this.chart.update()
     },
     options() {
+      this.chart.options = this.options
       this.chart.update()
     },
   },

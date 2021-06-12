@@ -1,7 +1,7 @@
 <template>
   <v-text-field
     ref="field"
-    label="Label"
+    label="Datum"
     outlined
     :rules="rules"
     :value="value"
@@ -13,11 +13,12 @@
 
 <script>
 import required from '@/assets/js/validation/required.js'
+import number from '@/assets/js/validation/number.js'
 
 export default {
   props: {
     value: {
-      type: String,
+      type: [Number, String],
       default: '',
     },
     additionalRules: {
@@ -28,6 +29,7 @@ export default {
   data: vm => ({
     rules: [
       required,
+      number,
       ...vm.additionalRules,
     ],
   }),

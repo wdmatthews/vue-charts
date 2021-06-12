@@ -1,10 +1,10 @@
 <template>
   <base-dialog ref="baseDialog">
     <template #title>
-      Remove Label
+      Remove Datum
     </template>
     <p class="mb-0 text-center">
-      Are you sure you want to remove {{ label }}?
+      Are you sure you want to remove {{ datum }}?
     </p>
     <template #actions>
       <v-btn
@@ -27,13 +27,17 @@
 <script>
 export default {
   props: {
-    index: {
+    datasetIndex: {
       type: Number,
       default: 0,
     },
-    label: {
-      type: String,
-      default: '',
+    datumIndex: {
+      type: Number,
+      default: 0,
+    },
+    datum: {
+      type: Number,
+      default: 0,
     },
   },
   methods: {
@@ -44,7 +48,7 @@ export default {
       this.$refs.baseDialog.close()
     },
     remove() {
-      this.$store.commit('removeLabel', this.index)
+      this.$store.commit('removeDatum', { datasetIndex: this.datasetIndex, datumIndex: this.datumIndex })
       this.close()
     },
   },

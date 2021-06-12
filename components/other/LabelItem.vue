@@ -7,7 +7,7 @@
       <v-btn
         color="primary"
         icon
-        @click="openEditDialog"
+        @click="$refs.editDialog.open()"
       >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
@@ -16,7 +16,7 @@
       <v-btn
         color="error"
         icon
-        @click="openRemoveDialog"
+        @click="$refs.removeDialog.open()"
       >
         <v-icon>mdi-delete</v-icon>
       </v-btn>
@@ -44,17 +44,6 @@ export default {
     label: {
       type: String,
       default: '',
-    },
-  },
-  data: vm => ({
-    
-  }),
-  methods: {
-    openEditDialog() {
-      this.$refs.editDialog.open()
-    },
-    openRemoveDialog() {
-      this.$refs.removeDialog.open()
     },
   },
 }

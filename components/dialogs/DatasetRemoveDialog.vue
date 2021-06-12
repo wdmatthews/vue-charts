@@ -1,10 +1,10 @@
 <template>
   <base-dialog ref="baseDialog">
     <template #title>
-      Remove Label
+      Remove Dataset
     </template>
     <p class="mb-0 text-center">
-      Are you sure you want to remove {{ label }}?
+      Are you sure you want to remove {{ dataset.label }}?
     </p>
     <template #actions>
       <v-btn
@@ -31,9 +31,9 @@ export default {
       type: Number,
       default: 0,
     },
-    label: {
-      type: String,
-      default: '',
+    dataset: {
+      type: Object,
+      default: () => {},
     },
   },
   methods: {
@@ -44,7 +44,7 @@ export default {
       this.$refs.baseDialog.close()
     },
     remove() {
-      this.$store.commit('removeLabel', this.index)
+      this.$store.commit('removeDataset', this.index)
       this.close()
     },
   },

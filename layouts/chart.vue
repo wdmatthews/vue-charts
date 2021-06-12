@@ -41,7 +41,10 @@
               md="6"
               class="pa-4"
             >
-              <v-expansion-panels v-model="dataExpansionPanel">
+              <v-expansion-panels
+                v-model="dataLabelsExpansionPanel"
+                class="mb-4"
+              >
                 <v-expansion-panel>
                   <v-expansion-panel-header>
                     Labels
@@ -72,7 +75,7 @@
                       </v-btn>
                     </v-row>
                     <v-list>
-                      <DataLabel
+                      <LabelItem
                         v-for="(label, i) in $store.state.labels"
                         :key="`label-${i}`"
                         :index="i"
@@ -81,14 +84,88 @@
                     </v-list>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
-                <!-- <v-expansion-panel>
+                <v-expansion-panel>
                   <v-expansion-panel-header>
-                    
+                    Datasets
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    
+                    <v-row
+                      no-gutters
+                      align="center"
+                    >
+                      <v-col>
+                        <v-form
+                          ref="addDatasetForm"
+                          v-model="addDatasetFormIsValid"
+                          @submit.prevent="addDataset"
+                        >
+                          <LabelField v-model="addDatasetLabelValue" />
+                        </v-form>
+                      </v-col>
+                      <v-btn
+                        color="primary"
+                        icon
+                        class="ml-4"
+                        style="margin-bottom: 30px"
+                        :disabled="!addDatasetFormIsValid"
+                        @click="addDataset"
+                      >
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                    </v-row>
+                    <v-list>
+                      <DatasetItem
+                        v-for="(dataset, i) in $store.state.datasets"
+                        :key="`dataset-${i}`"
+                        :index="i"
+                        :dataset="dataset"
+                      />
+                    </v-list>
                   </v-expansion-panel-content>
-                </v-expansion-panel> -->
+                </v-expansion-panel>
+              </v-expansion-panels>
+              <v-expansion-panels v-model="dataDatasetsExpansionPanel">
+                <v-expansion-panel
+                  v-for="(dataset, i) in $store.state.datasets"
+                  :key="`dataset-data-${i}`"
+                >
+                  <v-expansion-panel-header v-text="dataset.label" />
+                  <v-expansion-panel-content>
+                    <v-row
+                      no-gutters
+                      align="center"
+                    >
+                      <v-col>
+                        <v-form
+                          ref="addDatumForm"
+                          v-model="addDatumFormIsValid"
+                          @submit.prevent="addDatum(i)"
+                        >
+                          <DatumField v-model.number="addDatumValue" />
+                        </v-form>
+                      </v-col>
+                      <v-btn
+                        color="primary"
+                        icon
+                        class="ml-4"
+                        style="margin-bottom: 30px"
+                        :disabled="!addDatumFormIsValid"
+                        @click="addDatum(i)"
+                      >
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                    </v-row>
+                    <v-list>
+                      <DatasetDatumItem
+                        v-for="(datum, j) in dataset.data"
+                        :key="`dataset-datum-${j}`"
+                        :dataset-index="i"
+                        :datum-index="j"
+                        :datum="datum"
+                      />
+                    </v-list>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
               </v-expansion-panels>
             </v-col>
           </v-row>
@@ -105,9 +182,14 @@
 export default {
   data: vm => ({
     tab: 0,
-    dataExpansionPanel: 0,
+    dataLabelsExpansionPanel: 0,
+    dataDatasetsExpansionPanel: 0,
     addLabelFormIsValid: false,
     addLabelValue: '',
+    addDatasetFormIsValid: false,
+    addDatasetLabelValue: '',
+    addDatumFormIsValid: false,
+    addDatumValue: '',
   }),
   methods: {
     addLabel() {
@@ -115,6 +197,26 @@ export default {
       this.$store.commit('addLabel', this.addLabelValue)
       this.addLabelValue = ''
       this.$refs.addLabelForm.resetValidation()
+    },
+    addDataset() {
+      if (!this.addDatasetFormIsValid) { return }
+      this.$store.commit('addDataset', {
+        label: this.addDatasetLabelValue,
+        backgroundColor: '#81D4FA',
+        borderColor: '#81D4FA',
+        data: [1, 2, 3],
+      })
+      this.addDatasetLabelValue = ''
+      this.$refs.addDatasetForm.resetValidation()
+    },
+    addDatum(datasetIndex) {
+      if (!this.addDatumFormIsValid) { return }
+      this.$store.commit('addDatum', {
+        datasetIndex,
+        value: this.addDatumValue,
+      })
+      this.addDatumValue = ''
+      this.$refs.addDatumForm[datasetIndex].resetValidation()
     },
   },
 }
