@@ -47,33 +47,37 @@
                     Labels
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
+                    <v-row
+                      no-gutters
+                      align="center"
+                    >
+                      <v-col>
+                        <v-form
+                          ref="addLabelForm"
+                          v-model="addLabelFormIsValid"
+                          @submit.prevent="addLabel"
+                        >
+                          <LabelField v-model="addLabelValue" />
+                        </v-form>
+                      </v-col>
+                      <v-btn
+                        color="primary"
+                        icon
+                        class="ml-4"
+                        style="margin-bottom: 30px"
+                        :disabled="!addLabelFormIsValid"
+                        @click="addLabel"
+                      >
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                    </v-row>
                     <v-list>
-                      <v-list-item
+                      <DataLabel
                         v-for="(label, i) in $store.state.labels"
                         :key="`label-${i}`"
-                      >
-                        <v-list-item-content>
-                          <v-list-item-title v-text="label" />
-                        </v-list-item-content>
-                        <v-list-item-action>
-                          <v-btn
-                            color="primary"
-                            icon
-                            @click="openEditLabelDialog(i)"
-                          >
-                            <v-icon>mdi-pencil</v-icon>
-                          </v-btn>
-                        </v-list-item-action>
-                        <v-list-item-action>
-                          <v-btn
-                            color="error"
-                            icon
-                            @click="openRemoveLabelDialog(i)"
-                          >
-                            <v-icon>mdi-delete</v-icon>
-                          </v-btn>
-                        </v-list-item-action>
-                      </v-list-item>
+                        :index="i"
+                        :label="label"
+                      />
                     </v-list>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -102,13 +106,15 @@ export default {
   data: vm => ({
     tab: 0,
     dataExpansionPanel: 0,
+    addLabelFormIsValid: false,
+    addLabelValue: '',
   }),
   methods: {
-    openEditLabelDialog() {
-      
-    },
-    openRemoveLabelDialog() {
-      
+    addLabel() {
+      if (!this.addLabelFormIsValid) { return }
+      this.$store.commit('addLabel', this.addLabelValue)
+      this.addLabelValue = ''
+      this.$refs.addLabelForm.resetValidation()
     },
   },
 }

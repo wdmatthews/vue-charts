@@ -4,7 +4,7 @@
     :height="height"
     :labels="labels"
     :datasets="datasets"
-    :options="options"
+    :options="localOptions"
   />
 </template>
 
@@ -17,16 +17,23 @@ export default {
     labels: [],
     datasets: [],
     options: {},
+    localOptions: {},
   }),
   head: vm => ({
     title: 'Bar Chart',
   }),
+  watch: {
+    options() {
+      this.localOptions = { ...this.options, ...this.localOptions }
+    },
+  },
   created() {
     this.width = this.$store.state.width
     this.height = this.$store.state.height
-    this.labels = [...this.$store.state.labels]
-    this.datasets = [...this.$store.state.datasets]
-    this.options = { ...this.$store.state.options }
+    this.labels = this.$store.state.labels
+    this.datasets = this.$store.state.datasets
+    this.options = this.$store.state.options
+    this.localOptions = { ...this.options }
   },
 }
 </script>
