@@ -24,6 +24,16 @@ export default () => ({
     color: '#FFFFFF',
     fill: false,
     indexAxis: 'x',
+    plugins: {
+      title: {
+        display: true,
+        text: 'Chart',
+        color: '#FFFFFF',
+      },
+      legend: {
+        display: true,
+      },
+    },
     scales: {
       x: {
         title: {
