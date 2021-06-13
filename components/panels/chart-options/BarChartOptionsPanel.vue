@@ -14,6 +14,14 @@
           :additional-rules="[v => !v || indexAxisChoices.includes(v) || indexAxisHint]"
           @submit="save"
         />
+        <TextField
+          v-model.number="editBorderRadiusValue"
+          label="Border Radius"
+          :hint="borderRadiusHint"
+          :disabled="!isEditing"
+          :additional-rules="[v => !v || !isNaN(v) && v >= 0 || borderRadiusHint]"
+          @submit="save"
+        />
         <div class="text-center mb-4">
           <v-btn
             v-show="!isEditing"
@@ -51,12 +59,15 @@ export default {
     editIndexAxisValue: vm.$store.state.options.indexAxis,
     indexAxisChoices: ['x', 'y'],
     indexAxisHint: 'x or y',
+    editBorderRadiusValue: vm.$store.state.options.borderRadius,
+    borderRadiusHint: 'Positive number or zero',
   }),
   methods: {
     save() {
       if (!this.formIsValid) { return }
       this.$store.commit('saveOptions', {
         indexAxis: this.editIndexAxisValue,
+        borderRadius: this.editBorderRadiusValue,
       })
       this.isEditing = false
     },
@@ -65,6 +76,7 @@ export default {
     },
     cancelEditing() {
       this.editIndexAxisValue = this.$store.state.options.indexAxis
+      this.editBorderRadiusValue = this.$store.state.options.borderRadius
       this.isEditing = false
     },
   },

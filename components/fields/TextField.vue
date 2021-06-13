@@ -20,7 +20,7 @@ import required from '@/assets/js/validation/required.js'
 export default {
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
     label: {
