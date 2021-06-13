@@ -2,6 +2,47 @@
   <v-expansion-panel>
     <v-expansion-panel-header v-text="dataset.label" />
     <v-expansion-panel-content>
+      <v-form
+        v-model="colorFormIsValid"
+        @submit.prevent="saveColors"
+      >
+        <ColorField
+          v-model="editBackgroundColorValue"
+          label="Background Color"
+          :disabled="!isEditingColor"
+          @submit="saveColors"
+        />
+        <ColorField
+          v-model="editBorderColorValue"
+          label="Border Color"
+          :disabled="!isEditingColor"
+          @submit="saveColors"
+        />
+        <div class="text-center mb-4">
+          <v-btn
+            v-show="!isEditingColor"
+            color="primary"
+            @click="startEditingColors"
+          >
+            Edit
+          </v-btn>
+          <v-btn
+            v-show="isEditingColor"
+            class="mr-4"
+            @click="stopEditingColors"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            v-show="isEditingColor"
+            color="primary"
+            :disabled="!colorFormIsValid"
+            @click="saveColors"
+          >
+            Save
+          </v-btn>
+        </div>
+      </v-form>
       <v-row
         no-gutters
         align="center"
@@ -54,7 +95,15 @@ export default {
   data: vm => ({
     addDatumFormIsValid: false,
     addDatumValue: '',
+    isEditingColor: false,
+    colorFormIsValid: false,
+    editBackgroundColorValue: '',
+    editBorderColorValue: '',
   }),
+  created() {
+    this.editBackgroundColorValue = this.dataset.backgroundColor
+    this.editBorderColorValue = this.dataset.borderColor
+  },
   methods: {
     addDatum() {
       if (!this.addDatumFormIsValid) { return }
@@ -64,6 +113,23 @@ export default {
       })
       this.addDatumValue = ''
       this.$refs.addDatumForm.resetValidation()
+    },
+    saveColors() {
+      if (!this.colorFormIsValid) { return }
+      this.$store.commit('editDatasetColors', {
+        index: this.index,
+        backgroundColor: this.editBackgroundColorValue,
+        borderColor: this.editBorderColorValue,
+      })
+      this.isEditingColor = false
+    },
+    startEditingColors() {
+      this.isEditingColor = true
+    },
+    stopEditingColors() {
+      this.editBackgroundColorValue = this.dataset.backgroundColor
+      this.editBorderColorValue = this.dataset.borderColor
+      this.isEditingColor = false
     },
   },
 }
