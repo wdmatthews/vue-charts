@@ -1,9 +1,9 @@
 <template>
   <LineChart
-    :width="width"
-    :height="height"
-    :labels="labels"
-    :datasets="datasets"
+    :width="$store.state.width"
+    :height="$store.state.height"
+    :labels="$store.state.labels"
+    :datasets="$store.state.datasets"
     :options="localOptions"
   />
 </template>
@@ -12,28 +12,20 @@
 export default {
   layout: 'chart',
   data: vm => ({
-    width: 400,
-    height: 400,
-    labels: [],
-    datasets: [],
-    options: {},
-    localOptions: {},
+    localOptions: { ...vm.$store.state.options },
   }),
   head: vm => ({
     title: 'Line Chart',
   }),
-  watch: {
+  computed: {
     options() {
-      this.localOptions = { ...this.options, ...this.localOptions }
+      return this.$store.state.options
     },
   },
-  created() {
-    this.width = this.$store.state.width
-    this.height = this.$store.state.height
-    this.labels = this.$store.state.labels
-    this.datasets = this.$store.state.datasets
-    this.options = this.$store.state.options
-    this.localOptions = { ...this.options }
+  watch: {
+    options() {
+      this.localOptions = { ...this.localOptions, ...this.$store.state.options }
+    },
   },
 }
 </script>

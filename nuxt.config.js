@@ -35,6 +35,8 @@ export default {
       '~/components/dialogs',
       '~/components/fields',
       '~/components/panels',
+      '~/components/panels/chart-options',
+      '~/components/panels/general-options',
       '~/components/other',
     ],
   },

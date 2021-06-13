@@ -73,7 +73,8 @@
                 v-model="optionsExpansionPanel"
                 class="mb-4"
               >
-                <!-- Option Panels Go Here -->
+                <BarChartOptionsPanel v-if="chartType === 'bar'" />
+                <LineChartOptionsPanel v-if="chartType === 'line'" />
               </v-expansion-panels>
               <FormattedOptionsCard />
             </v-col>
@@ -92,5 +93,10 @@ export default {
     dataDatasetsExpansionPanel: 0,
     optionsExpansionPanel: 0,
   }),
+  computed: {
+    chartType() {
+      return this.$route.path.substring(1)
+    },
+  },
 }
 </script>

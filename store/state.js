@@ -12,6 +12,7 @@ export default () => ({
   ],
   options: {
     color: '#FFFFFF',
+    indexAxis: 'x',
     scales: {
       x: {
         grid: {

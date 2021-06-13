@@ -16,3 +16,7 @@ export {
   edit as editDatum,
   remove as removeDatum,
 } from './datum/mutations.js'
+
+export {
+  save as saveOptions,
+} from './option/mutations.js'

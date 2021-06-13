@@ -29,7 +29,7 @@
           <v-btn
             v-show="isEditingColor"
             class="mr-4"
-            @click="stopEditingColors"
+            @click="cancelEditingColors"
           >
             Cancel
           </v-btn>
@@ -97,13 +97,9 @@ export default {
     addDatumValue: '',
     isEditingColor: false,
     colorFormIsValid: false,
-    editBackgroundColorValue: '',
-    editBorderColorValue: '',
+    editBackgroundColorValue: vm.dataset.backgroundColor,
+    editBorderColorValue: vm.dataset.borderColor,
   }),
-  created() {
-    this.editBackgroundColorValue = this.dataset.backgroundColor
-    this.editBorderColorValue = this.dataset.borderColor
-  },
   methods: {
     addDatum() {
       if (!this.addDatumFormIsValid) { return }
@@ -126,7 +122,7 @@ export default {
     startEditingColors() {
       this.isEditingColor = true
     },
-    stopEditingColors() {
+    cancelEditingColors() {
       this.editBackgroundColorValue = this.dataset.backgroundColor
       this.editBorderColorValue = this.dataset.borderColor
       this.isEditingColor = false
