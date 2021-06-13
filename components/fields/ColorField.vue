@@ -2,6 +2,7 @@
   <v-text-field
     ref="field"
     outlined
+    hint="Hexadecimal (#FFFFFF)"
     :label="label"
     :disabled="disabled"
     :rules="rules"

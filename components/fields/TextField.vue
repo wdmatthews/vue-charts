@@ -2,7 +2,6 @@
   <v-text-field
     ref="field"
     outlined
-    persistent-hint
     :label="label"
     :hint="hint"
     :disabled="disabled"

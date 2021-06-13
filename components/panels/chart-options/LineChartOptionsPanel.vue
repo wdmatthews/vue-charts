@@ -62,8 +62,8 @@ export default {
   data: vm => ({
     isEditing: false,
     formIsValid: false,
-    editTensionValue: vm.$store.state.options.tension,
     positiveNumberHint: 'Positive number or zero',
+    editTensionValue: vm.$store.state.options.tension,
     editFillValue: vm.$store.state.options.fill,
     editBorderDashValue: vm.$store.state.options.borderDash.length > 0
       ? vm.$store.state.options.borderDash[0]

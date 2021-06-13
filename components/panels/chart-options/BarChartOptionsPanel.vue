@@ -17,9 +17,9 @@
         <TextField
           v-model.number="editBorderRadiusValue"
           label="Border Radius"
-          :hint="borderRadiusHint"
+          :hint="positiveNumberHint"
           :disabled="!isEditing"
-          :additional-rules="[v => !v || !isNaN(v) && v >= 0 || borderRadiusHint]"
+          :additional-rules="[v => !v || !isNaN(v) && v >= 0 || positiveNumberHint]"
           @submit="save"
         />
         <div class="text-center mb-4">
@@ -57,10 +57,10 @@ export default {
     isEditing: false,
     formIsValid: false,
     editIndexAxisValue: vm.$store.state.options.indexAxis,
+    positiveNumberHint: 'Positive number or zero',
     indexAxisChoices: ['x', 'y'],
     indexAxisHint: 'x or y',
     editBorderRadiusValue: vm.$store.state.options.borderRadius,
-    borderRadiusHint: 'Positive number or zero',
   }),
   methods: {
     save() {

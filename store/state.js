@@ -12,7 +12,7 @@ export default () => ({
   labels: [...labels],
   datasets: [
     {
-      label: 'Dataset 1',
+      label: 'Dataset',
       backgroundColor: '#81D4FA',
       borderColor: '#81D4FA',
       data: [...data],
@@ -26,18 +26,48 @@ export default () => ({
     indexAxis: 'x',
     scales: {
       x: {
+        title: {
+          display: true,
+          text: 'X Axis',
+          color: '#FFFFFF',
+        },
         grid: {
+          display: true,
           color: '#757575',
+          lineWidth: 1,
+          drawBorder: true,
+          borderColor: '#757575',
+          borderWidth: 1,
+          drawTicks: true,
+          tickColor: '#757575',
+          tickWidth: 1,
+          tickLength: 8,
         },
         ticks: {
+          display: true,
           color: '#FFFFFF',
         },
       },
       y: {
+        title: {
+          display: true,
+          text: 'Y Axis',
+          color: '#FFFFFF',
+        },
         grid: {
+          display: true,
           color: '#757575',
+          lineWidth: 1,
+          drawBorder: true,
+          borderColor: '#757575',
+          borderWidth: 1,
+          drawTicks: true,
+          tickColor: '#757575',
+          tickWidth: 1,
+          tickLength: 8,
         },
         ticks: {
+          display: true,
           color: '#FFFFFF',
         },
       },

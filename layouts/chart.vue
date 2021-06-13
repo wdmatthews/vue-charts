@@ -75,6 +75,8 @@
               >
                 <BarChartOptionsPanel v-if="chartType === 'bar'" />
                 <LineChartOptionsPanel v-if="chartType === 'line'" />
+                <AxisOptionsPanel axis="x" />
+                <AxisOptionsPanel axis="y" />
               </v-expansion-panels>
               <FormattedOptionsCard />
             </v-col>
